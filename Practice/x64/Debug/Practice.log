@@ -1,0 +1,4 @@
+﻿  Practice.cpp
+C:\Users\Ананас\OneDrive\Рабочий стол\Practice\Practice\Practice.cpp(53,68): warning C4244: =: преобразование "float" в "int", возможна потеря данных
+C:\Users\Ананас\OneDrive\Рабочий стол\Practice\Practice\Practice.cpp(56,42): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  Practice.vcxproj -> C:\Users\Ананас\OneDrive\Рабочий стол\Practice\x64\Debug\Practice.exe
