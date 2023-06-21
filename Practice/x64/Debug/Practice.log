@@ -1,4 +1,2 @@
 ﻿  Practice.cpp
-C:\Users\Ананас\OneDrive\Рабочий стол\Practice\Practice\Practice.cpp(60,34): warning C4305: инициализация: усечение из "double" в "float"
-C:\Users\Ананас\OneDrive\Рабочий стол\Practice\Practice\Practice.cpp(65,42): warning C4244: =: преобразование "double" в "float", возможна потеря данных
   Practice.vcxproj -> C:\Users\Ананас\OneDrive\Рабочий стол\Practice\x64\Debug\Practice.exe

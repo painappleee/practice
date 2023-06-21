@@ -1,13 +1,13 @@
 ﻿#include <iostream>
 #include <string>
 #include<iomanip>
+#include<fstream>
 #include<Windows.h>
 
 using namespace std;
 
 int countLab=0;
 
-//void showMenu();
 
 struct student {
     string name;
@@ -18,14 +18,32 @@ struct student {
     bool admission=true;
 };
 
+struct students {
+    student stud;
+    students* next;
+};
+
 
 int main()
 {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    int maxPoints = 0;    
-    cout << "Введите количество лабораторных работ: "; cin >> countLab;
-    system("cls");
+
+    ifstream fin("students.txt");
+
+    students* curr = new students;
+    students* head = curr;
+
+   
+    string s;
+    getline(fin, s);
+    countLab = stoi(s);
+
+
+    fin.close();
+
+    /*int maxPoints = 0;    
+    cout << "Введите количество лабораторных работ: "; cin >> countLab; 
     int* weightLab = new int[countLab];
     for (int i = 0; i < countLab; i++) {
         cout << "Введите вес " << i + 1 << " лабораторной работы: "; cin >> weightLab[i];
@@ -106,11 +124,11 @@ int main()
     for (int i = 0; i < countLab; i++) {
         cout << setw(7) << weightLab[i];
     }
-    cout << endl;
-    cout <<setw(20)<<"Максимальный балл: "<<setw(7) << maxPoints << endl;
-    cout << setw(20) << "Наилучшая успеваемость:" << setw(7) << fixed << setprecision(0) << maxStudPoints<<endl;
-    cout << setw(20) << "Минимальный процент:" << setw(7) <<fixed<<setprecision(1) << procentForAutoMark<<"%";
-   
+    cout << endl<<endl;
+    cout <<setw(20)<<"Максимальный балл: "<< maxPoints << endl;
+    cout << setw(20) << "Наилучшая успеваемость: "<< fixed << setprecision(0) << maxStudPoints<<endl;
+    cout << setw(20) << "Минимальный процент: " <<fixed<<setprecision(1) << procentForAutoMark<<"%";
+   */
 }
 
 //void showMenu() {
