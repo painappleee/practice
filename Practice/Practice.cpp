@@ -42,7 +42,7 @@ int main()
                 exit(1);
             }               
             else {
-                fin >> countLab; // ввод количества лаб
+                fin >> countLab;
                 weightLab.resize(countLab); // расширене массива под заданное количество лаб
                 for (int i = 0; i < countLab; i++) {
                     fin >> weightLab[i];
@@ -54,29 +54,22 @@ int main()
                     for (int i = 0; i < countLab; i++) {
                         fin >> readStudent.marks[i];
                     }
-
                     fin.ignore();
-                    getline(fin, readStudent.name);
-
+                    getline(fin, readStudent.name); 
                     students.push_back(readStudent);
-
                 }
-
                 fin.close();
-            }
-            
+            }            
         }
-
         else if (vvod=='1') {
             // ручной ввод
             do {
                 if (countLab < 1)
                     cout << "Количество лабораторных работ не может быть меньше 1" << endl;
-                cout << "Введите количество лабораторных работ: "; cin >> countLab;
-                weightLab.resize(countLab);
+                cout << "Введите количество лабораторных работ: "; cin >> countLab;                
                 system("cls");
             } while (countLab < 1);
-
+            weightLab.resize(countLab);
             bool isError = false;
             do {
                 if (isError)
@@ -125,9 +118,8 @@ int main()
             cout << endl;
         }
 
-    } while (vvod != '0' && vvod != '1');
-    
-
+    } while (vvod != '0' && vvod != '1');  
+    // формирование суммы баллов, процента успеваемости, наличия автомата и допуска для каждого студента
     for (int i = 0; i < students.size(); i++) {
         for (int j = 0; j < countLab; j++) {
             students[i].points += students[i].marks[j]*weightLab[j];
@@ -149,16 +141,16 @@ int main()
 
     char outRes;
     do {
+        // выбор способа вывода
         cout << "Выберите способ вывода:" << endl << "0 - вывод в файл" << endl << "1 - вывод в консоль" << endl;
         cin >> outRes;
         system("cls");
         if (outRes == '1') {
+            // вывод в консоль
             cout << setw(20) << " ";
             for (int i = 0; i < countLab; i++)
                 cout << setw(8) << "Лаба " << i + 1;
-
             cout << setw(6) << "Итог" << setw(9) << "Процент" << setw(9) << "Автомат" << setw(8) << "Допуск" << endl;
-
             for (int i = 0; i < students.size(); i++) {
                 cout << setw(20) <<left<< students[i].name;
                 for (int j = 0; j < countLab; j++)
@@ -177,7 +169,6 @@ int main()
 
                 cout << endl;
             }
-
             cout << endl;
             cout << "Вес лаб: ";
             for (int i = 0; i < countLab; i++)
@@ -185,23 +176,19 @@ int main()
             cout << endl;
             cout << "Максимальный балл: " << maxPoints << endl << "Наилучшая успеваемость: " << fixed << setprecision(0) << maxStudPoints << endl;
             cout << "Минимальный процент: " << fixed << setprecision(1) << minPercent << "%" << endl;
-
         }
         else if (outRes == '0') {
+            // вывод в файл
             ofstream fout("studentsResults.txt");
             fout << setw(20) << " ";
             for (int i = 0; i < countLab; i++)
                 fout << setw(8) << "Лаба " << i + 1;
-
             fout << setw(6) << "Итог" << setw(9) << "Процент" << setw(9) << "Автомат" << setw(8) << "Допуск" << endl;
-
             for (int i = 0; i < students.size(); i++) {
                 fout << setw(20) << left<< students[i].name;
                 for (int j = 0; j < countLab; j++)
                     fout << setw(9) <<right<< students[i].marks[j];
-
                 fout << setw(5) << fixed << setprecision(0) << students[i].points << setw(8) << fixed << setprecision(1) << students[i].percent << "%";
-
                 if (students[i].autoMark)
                     fout << setw(7) << "+";
                 else
@@ -214,7 +201,6 @@ int main()
 
                 fout << endl;
             }
-
             fout << endl;
             fout << "Вес лаб: ";
             for (int i = 0; i < countLab; i++)
@@ -222,16 +208,12 @@ int main()
             fout << endl;
             fout << "Максимальный балл: " << maxPoints << endl << "Наилучшая успеваемость: " << fixed << setprecision(0) << maxStudPoints << endl;
             fout << "Минимальный процент: " << fixed << setprecision(1) << minPercent << "%";
-
             cout << endl << "Результаты успешно записаны в файл studentsResults.txt" << endl;
         }
         else {
             cout << "Такой команды не существует" << endl;
             cout << endl;
         }
-    } while (outRes != '0' && outRes != '1');
-    
-   
-       
+    } while (outRes != '0' && outRes != '1');       
 }
 
