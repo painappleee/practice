@@ -30,34 +30,41 @@ int main()
     char vvod;
     do {
         // выбор способа ввода
-
         cout << "Выберите способ ввода:" << endl << "0 - ввод из файла" << endl << "1 - ручной ввод" << endl;
         cin >> vvod;
         system("cls");
         if (vvod == '0') {
             // ввод данных из файла
-            ifstream fin("students.txt");
-            fin >> countLab; // ввод количества лаб
-            weightLab.resize(countLab); // расширене массива под заданное количество лаб
-            for (int i = 0; i < countLab; i++) {
-                fin >> weightLab[i];
-                maxPoints += 5 * weightLab[i]; // нахождение максимально возможного количества баллов
-            }
-            while (!fin.eof()) {
-                student readStudent; // переменная для считывания данных о студенте
-                readStudent.marks.resize(countLab);// расширене массива под заданное количество лаб
+            ifstream fin;
+            fin.open("students.txt");
+            if (!fin.is_open()) {
+                cout << "Файл не найден" << endl;;
+                exit(1);
+            }               
+            else {
+                fin >> countLab; // ввод количества лаб
+                weightLab.resize(countLab); // расширене массива под заданное количество лаб
                 for (int i = 0; i < countLab; i++) {
-                    fin >> readStudent.marks[i];
+                    fin >> weightLab[i];
+                    maxPoints += 5 * weightLab[i]; // нахождение максимально возможного количества баллов
+                }
+                while (!fin.eof()) {
+                    student readStudent; // переменная для считывания данных о студенте
+                    readStudent.marks.resize(countLab);// расширене массива под заданное количество лаб
+                    for (int i = 0; i < countLab; i++) {
+                        fin >> readStudent.marks[i];
+                    }
+
+                    fin.ignore();
+                    getline(fin, readStudent.name);
+
+                    students.push_back(readStudent);
+
                 }
 
-
-                getline(fin, readStudent.name);
-
-                students.push_back(readStudent);
-
+                fin.close();
             }
-
-            fin.close();
+            
         }
 
         else if (vvod=='1') {
@@ -148,25 +155,25 @@ int main()
         if (outRes == '1') {
             cout << setw(20) << " ";
             for (int i = 0; i < countLab; i++)
-                cout << setw(7) << "Лаба " << i + 1;
+                cout << setw(8) << "Лаба " << i + 1;
 
             cout << setw(6) << "Итог" << setw(9) << "Процент" << setw(9) << "Автомат" << setw(8) << "Допуск" << endl;
 
             for (int i = 0; i < students.size(); i++) {
-                cout << setw(20) << students[i].name;
+                cout << setw(20) <<left<< students[i].name;
                 for (int j = 0; j < countLab; j++)
-                    cout << setw(7) << students[i].marks[j];
-                cout << setw(10) << fixed << setprecision(0) << students[i].points << setw(8) << fixed << setprecision(1) << students[i].percent << "%";
+                    cout << setw(9) << right<<students[i].marks[j];
+                cout << setw(5) << fixed << setprecision(0) << students[i].points << setw(8) << fixed << setprecision(1) << students[i].percent << "%";
 
                 if (students[i].autoMark)
-                    cout << setw(8) << "+";
+                    cout << setw(7) << "+";
                 else
-                    cout << setw(8) << "-";
+                    cout << setw(7) << "-";
 
                 if (students[i].admission)
-                    cout << setw(8) << "+";
+                    cout << setw(9) << "+";
                 else
-                    cout << setw(8) << "-";
+                    cout << setw(9) << "-";
 
                 cout << endl;
             }
@@ -184,25 +191,26 @@ int main()
             ofstream fout("studentsResults.txt");
             fout << setw(20) << " ";
             for (int i = 0; i < countLab; i++)
-                fout << setw(7) << "Лаба " << i + 1;
+                fout << setw(8) << "Лаба " << i + 1;
 
             fout << setw(6) << "Итог" << setw(9) << "Процент" << setw(9) << "Автомат" << setw(8) << "Допуск" << endl;
 
             for (int i = 0; i < students.size(); i++) {
-                fout << setw(20) << students[i].name;
+                fout << setw(20) << left<< students[i].name;
                 for (int j = 0; j < countLab; j++)
-                    fout << setw(7) << students[i].marks[j];
-                fout << setw(10) << fixed << setprecision(0) << students[i].points << setw(8) << fixed << setprecision(1) << students[i].percent << "%";
+                    fout << setw(9) <<right<< students[i].marks[j];
+
+                fout << setw(5) << fixed << setprecision(0) << students[i].points << setw(8) << fixed << setprecision(1) << students[i].percent << "%";
 
                 if (students[i].autoMark)
-                    fout << setw(8) << "+";
+                    fout << setw(7) << "+";
                 else
-                    fout << setw(8) << "-";
+                    fout << setw(7) << "-";
 
                 if (students[i].admission)
-                    fout << setw(8) << "+";
+                    fout << setw(9) << "+";
                 else
-                    fout << setw(8) << "-";
+                    fout << setw(9) << "-";
 
                 fout << endl;
             }
