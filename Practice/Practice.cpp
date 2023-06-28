@@ -60,7 +60,7 @@ void manualInput() {
     bool isError = false; //для определения есть ли ошибка среди введённых данных
     do {
         if (isError)
-            cout << "Веса лабораторных работ не могут быть меньше 0" << endl;
+            cout << "Веса лабораторных работ должны быть больше 0" << endl;
         cout << "Введите веса лабораторных работ через пробел: ";
         isError = false;
         for (int i = 0; i < countLab; i++) {
@@ -111,6 +111,7 @@ void output(T& out){
     for (int i = 0; i < countLab; i++)
         out << setw(8) << "Лаба " << i + 1;
     out << setw(6) << "Итог" << setw(9) << "Процент" << setw(9) << "Автомат" << setw(8) << "Допуск" << endl;
+    maxStudPoints = 0;
     for (int i = 0; i < students.size(); i++) {
         out << setw(20) << left << students[i].name;
         for (int j = 0; j < countLab; j++)
@@ -127,14 +128,17 @@ void output(T& out){
             out << setw(9) << "-";
 
         out << endl;
+        if (students[i].points > maxStudPoints)
+            maxStudPoints = students[i].points;
+
     }
     out << endl;
     out << "Вес лаб: ";
     for (int i = 0; i < countLab; i++)
         out << weightLab[i] << " ";
     out << endl;
-    out << "Максимально возможная сумма баллов: " << maxPoints << endl << "Наилучшая успеваемость: " << fixed << setprecision(0) << maxStudPoints << endl;
-    out << "Порог для автомата: " << fixed << setprecision(1) << minPercent << "%";
+    out << "Максимально возможная сумма баллов: " << maxPoints << endl << "Наилучшая успеваемость: " << fixed << setprecision(0) << maxStudPoints<< endl;
+    out << "Пороговый процент для автомата: " << fixed << setprecision(1) << minPercent << "%";
 }
 
 int main()
@@ -201,6 +205,7 @@ int main()
             ofstream fout("studentsResults.txt");
             output(fout);
             cout << endl << "Результаты успешно записаны в файл studentsResults.txt" << endl;
+            fout.close();
         }
         else {
             //в случае ввода некорректной команды
